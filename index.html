@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine?</title>
+<style>
+    :root {
+        --pink: #ff8fa3;
+        --dark-pink: #ff4d6d;
+        --bg: #fff0f3;
+    }
+
+    body {
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        background-color: var(--bg);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .card {
+        background: white;
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        max-width: 450px;
+        width: 90%;
+    }
+
+    .screen { display: none; }
+    .active { display: block; animation: fadeIn 0.5s; }
+
+    @keyframes fadeIn { 
+        from { opacity: 0; transform: translateY(10px); } 
+        to { opacity: 1; transform: translateY(0); } 
+    }
+
+    @keyframes popOut {
+        0% { transform: translateY(100px) scale(0); opacity: 0; }
+        60% { transform: translateY(-20px) scale(1.1); opacity: 1; }
+        80% { transform: translateY(10px) scale(0.95); }
+        100% { transform: translateY(0) scale(1); }
+    }
+
+    img {
+        width: 150px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+    }
+
+    .pop {
+        animation: popOut 0.8s ease forwards;
+    }
+
+    button {
+        background-color: var(--pink);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 50px;
+        font-size: 1rem;
+        cursor: pointer;
+        margin: 10px;
+        transition: 0.3s;
+    }
+
+    button:hover { background-color: var(--dark-pink); transform: scale(1.05); }
+
+    .gift-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 20px; }
+
+    .note { font-style: italic; color: #555; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<div class="card">
+    <div id="s1" class="screen active">
+        <img src="https://media.giphy.com/media/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Valentine GIF">
+        <h2>Hey there, will you be my Valentine?</h2>
+        <button onclick="next('s3')">YES OF COURSE</button>
+        <button onclick="next('s2')">NO THANK YOU</button>
+    </div>
+
+    <div id="s2" class="screen">
+        <h2>I love you 💖…So please don't break my heart, try again</h2>
+        <button onclick="next('s1')">Try Again</button>
+    </div>
+
+    <div id="s3" class="screen">
+        <h2>Yay, you said yes!</h2>
+        <p>I made all these for you...</p>
+        <div class="gift-grid">
+            <button onclick="next('s4')">Gift 1</button>
+            <button onclick="next('s5')">Gift 2</button>
+            <button onclick="next('s6')">Gift 3</button>
+        </div>
+    </div>
+
+    <div id="s4" class="screen">
+        <h2>For You 🌹</h2>
+        <img src="Love.jpg" class="pop" alt="Love Image"> <p>"I will always love you no matter what."</p>
+        <button onclick="next('s3')">Back to Gifts</button>
+    </div>
+
+    <div id="s5" class="screen">
+        <h2>Words from my Heart</h2>
+        <p class="note">To the love of my life, you make my life so meaningful and I am so lucky to have you. I love you wholeheartedly. XOXO</p>
+        <button onclick="next('s3')">Back to Gifts</button>
+    </div>
+
+    <div id="s6" class="screen">
+        <h2>A song for you 🎵</h2>
+        <p>Click the link below to listen!</p>
+        <a href="https://youtu.be/YRV6_7joaZA?si=6xzBg8_A4CyLTvLr" target="_blank">
+            <button>Listen Now</button>
+        </a>
+        <button onclick="next('s1')">Restart</button>
+    </div>
+</div>
+
+<script>
+function next(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    
+    const img = document.querySelector('#s4 img');
+    if (img) img.classList.remove('pop');
+    
+    const screen = document.getElementById(id);
+    screen.classList.add('active');
+
+    if (id === 's4') {
+        setTimeout(() => { img.classList.add('pop'); }, 50);
+    }
+}
+</script>
+
+</body>
+</html>
